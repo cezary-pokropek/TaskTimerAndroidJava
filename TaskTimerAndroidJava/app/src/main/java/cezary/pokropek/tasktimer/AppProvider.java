@@ -111,8 +111,8 @@ public class AppProvider extends ContentProvider {
         }
 
         SQLiteDatabase db = mOpenHelper.getReadableDatabase();
-        Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null,sortOrder);
-        return null;
+        return queryBuilder.query(db, projection, selection, selectionArgs, null, null,sortOrder);
+
     }
 
     @Nullable

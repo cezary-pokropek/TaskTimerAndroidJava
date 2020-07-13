@@ -19,6 +19,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="cezary.pokropek.tasktimer.AppProvider"
+            android:authorities="cezary.pokropek.tasktimer.provider"
+            android:exported="false"/>
+
     </application>
+
+
+
+
 
 </manifest>
