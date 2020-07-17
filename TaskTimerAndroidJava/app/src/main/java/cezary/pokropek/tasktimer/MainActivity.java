@@ -1,8 +1,10 @@
 package cezary.pokropek.tasktimer;
 
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -28,9 +30,21 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        String[] projection = { TasksContract.Columns.TASKS_NAME, TasksContract.Columns.TASKS_DESCRIPTION};
+        String[] projection = { TasksContract.Columns._ID,
+                                TasksContract.Columns.TASKS_NAME,
+                                TasksContract.Columns.TASKS_DESCRIPTION,
+                                TasksContract.Columns.TASKS_SORTORDER};
+
         ContentResolver contentResolver = getContentResolver();
+
+        ContentValues values = new ContentValues();
+//        values.put(TasksContract.Columns.TASKS_NAME, "New Task 1");
+//        values.put(TasksContract.Columns.TASKS_DESCRIPTION, "Description 1");
+//        values.put(TasksContract.Columns.TASKS_SORTORDER,2);
+//        Uri uri = contentResolver.insert(TasksContract.CONTENT_URI, values);
+
         Cursor cursor = contentResolver.query(TasksContract.CONTENT_URI,
+//        Cursor cursor = contentResolver.query(TasksContract.CONTENT_URI,
                 projection,
                 null,
                 null,
@@ -75,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.menumain_settings) {
             return true;
         }
 
