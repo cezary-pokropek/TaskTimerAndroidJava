@@ -21,15 +21,15 @@ class Task implements Serializable {
         return m_Id;
     }
 
-    public String getmName() {
+    public String getName() {
         return mName;
     }
 
-    public String getmDescription() {
+    public String getDescription() {
         return mDescription;
     }
 
-    public String getmSortOrder() {
+    public String getSortOrder() {
         return mSortOrder;
     }
 
