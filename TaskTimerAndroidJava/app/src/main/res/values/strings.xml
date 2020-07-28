@@ -25,4 +25,6 @@
     <string name="addedit_sort_hint">Order: sorts low to high</string>
     <string name="addedit_save_text">Save</string>
     <string name="title_activity_add_edit">AddEditActivity</string>
+    <string name="instrucions_heading">Instructions</string>
+    <string name="instructions">\"Use the add button (+) in the toolbar above to create new tasks. \n\nTasks with lower sort orders will be placed higher up to the list. Tasks with the same order will be sorted alphabetically. \n\nTapping a task will start the timer for that task(and will stop the timer for aby previous task that was being timed). \n\nEach task has Edit and Delete buttons if you want to change the details or remove the task. \"</string>
 </resources>

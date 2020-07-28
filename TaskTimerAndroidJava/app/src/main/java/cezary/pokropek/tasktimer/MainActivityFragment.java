@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +28,8 @@ public static final String TAG = "MainActivityFragment";
 
 public static final int LOADER_ID = 0;
 
+private CursorRecyclerViewAdapter mAdapter; // add adapter reference
+
     public MainActivityFragment() {
         Log.d(TAG, "MainActivityFragment: starts");
     }
@@ -42,7 +46,15 @@ public static final int LOADER_ID = 0;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: starts");
-        return inflater.inflate(R.layout.fragment_main_activity, container, false);
+        View view = inflater.inflate(R.layout.fragment_main_activity, container, false);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.taks_list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        mAdapter = new CursorRecyclerViewAdapter(null);
+        recyclerView.setAdapter(mAdapter);
+
+        Log.d(TAG, "onCreateView: returning");
+        return view;
     }
 
     @NonNull
@@ -69,22 +81,16 @@ public static final int LOADER_ID = 0;
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
         Log.d(TAG, "Entering onLoadFinished");
-        int count = -1;
-        if (data != null ) {
-            while(data.moveToNext()) {
-                for(int i=0; i< data.getColumnCount(); i++) {
-                    Log.d(TAG, "onLoadFinished: " + data.getColumnName(i) + ": " + data.getString(i));
-                }
-                Log.d(TAG, "onLoadFinished: =============================================");
-            }
-            count = data.getCount();
-        }
+        mAdapter.swapCursor(data);
+        int count = mAdapter.getItemCount();
+
         Log.d(TAG, "onLoadFinished: count is " + count);
     }
 
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
         Log.d(TAG, "onLoaderReset: ");
+        mAdapter.swapCursor(null);
     }
 }
 
