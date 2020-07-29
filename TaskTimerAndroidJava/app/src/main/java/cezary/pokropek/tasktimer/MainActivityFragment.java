@@ -63,7 +63,8 @@ private CursorRecyclerViewAdapter mAdapter; // add adapter reference
         Log.d(TAG, "onCreateLoader: starts with id " + id);
         String[] projection = {TasksContract.Columns._ID, TasksContract.Columns.TASKS_NAME,
                                 TasksContract.Columns.TASKS_DESCRIPTION, TasksContract.Columns.TASKS_SORTORDER};
-        String sortOrder = TasksContract.Columns.TASKS_SORTORDER + "," +TasksContract.Columns.TASKS_NAME;
+        // <order by> Tasks.SortOrder, Tasks.Name COLLATE NOCASE
+        String sortOrder = TasksContract.Columns.TASKS_SORTORDER + "," +TasksContract.Columns.TASKS_NAME + " COLLATE NOCASE";
 
        switch (id) {
            case LOADER_ID:
