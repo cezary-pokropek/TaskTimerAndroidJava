@@ -54,7 +54,7 @@ public class AddEditActivityFragment extends Fragment {
                 Log.d(TAG, "onCreateView: Task details found, editing...");
                 mNameTextView.setText(task.getName());
                 mDescriptionTextView.setText(task.getDescription());
-                mSortOrderTextView.setText(task.getSortOrder());
+                mSortOrderTextView.setText(Integer.toString(task.getSortOrder()));
                 mMode = FragmentEditMode.EDIT;
             } else {
                 // No task, so we must be adding a new task, and noe editing an existing one
@@ -89,7 +89,7 @@ public class AddEditActivityFragment extends Fragment {
                         if (!mDescriptionTextView.getText().toString().equals(task.getDescription())) {
                             values.put(TasksContract.Columns.TASKS_DESCRIPTION, mDescriptionTextView.getText().toString());
                         }
-                        if (so != Integer.parseInt(task.getSortOrder())) {
+                        if (so != task.getSortOrder()) {
                             values.put(TasksContract.Columns.TASKS_SORTORDER, so);
                         }
                         if(values.size() != 0){

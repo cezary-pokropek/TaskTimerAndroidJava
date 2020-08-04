@@ -19,7 +19,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CursorRecyclerViewAdapter.OnTaskClickListener{
 
     private static final String TAG = "MainActivity";
 
@@ -72,6 +72,16 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onEditClick(Task task) {
+        taskEditRequest(task);
+    }
+
+    @Override
+    public void onDeleteClick(Task task) {
+        getContentResolver().delete(TasksContract.buildTaskUri(task.getId()), null, null);
+    }
+
     private void taskEditRequest(Task task) {
         Log.d(TAG, "taskEditRequest: starts");
         if(mTwoPane) {
@@ -88,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 
 }
 

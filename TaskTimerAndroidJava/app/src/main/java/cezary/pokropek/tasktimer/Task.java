@@ -8,13 +8,13 @@ class Task implements Serializable {
     private long m_Id;
     private final String mName;
     private final String mDescription;
-    private final String mSortOrder;
+    private final int mSortOrder;
 
-    public Task(long id, String mName, String mDescription, String mSortOrder) {
+    public Task(long id, String name, String description, int sortOrder) {
         this.m_Id = id;
-        this.mName = mName;
-        this.mDescription = mDescription;
-        this.mSortOrder = mSortOrder;
+        mName = name;
+        mDescription = description;
+        mSortOrder = sortOrder;
     }
 
     public long getId() {
@@ -29,12 +29,12 @@ class Task implements Serializable {
         return mDescription;
     }
 
-    public String getSortOrder() {
+    public int getSortOrder() {
         return mSortOrder;
     }
 
     public void setId(long id) {
-        this.m_Id = m_Id;
+        this.m_Id = id;
     }
 
     @Override
@@ -43,11 +43,7 @@ class Task implements Serializable {
                 "m_Id=" + m_Id +
                 ", mName='" + mName + '\'' +
                 ", mDescription='" + mDescription + '\'' +
-                ", mSortOrder='" + mSortOrder + '\'' +
+                ", mSortOrder=" + mSortOrder +
                 '}';
     }
-
-
-
-    
 }

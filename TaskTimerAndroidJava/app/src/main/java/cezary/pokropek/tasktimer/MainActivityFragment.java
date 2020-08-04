@@ -50,7 +50,7 @@ private CursorRecyclerViewAdapter mAdapter; // add adapter reference
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.taks_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mAdapter = new CursorRecyclerViewAdapter(null);
+        mAdapter = new CursorRecyclerViewAdapter(null, (CursorRecyclerViewAdapter.OnTaskClickListener) getActivity());
         recyclerView.setAdapter(mAdapter);
 
         Log.d(TAG, "onCreateView: returning");
