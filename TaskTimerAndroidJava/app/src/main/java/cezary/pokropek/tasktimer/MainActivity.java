@@ -13,6 +13,8 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.View;
@@ -37,6 +39,12 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if (findViewById(R.id.task_details_container) != null) {
+            // The detail container view will be present only in the large-screen layouts (res/values-land abd res/values-sw600dp).
+            // If this view is present, then the activity should be in two-pane mode.
+            mTwoPane = true;
+        }
 
     }
 
@@ -86,6 +94,17 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
         Log.d(TAG, "taskEditRequest: starts");
         if(mTwoPane) {
             Log.d(TAG, "taskEditRequest: in two-pane mode (tablet)");
+            AddEditActivityFragment fragment = new AddEditActivityFragment();
+
+            Bundle arguments = new Bundle();
+            arguments.putSerializable(Task.class.getSimpleName(), task);
+            fragment.setArguments(arguments);
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.task_details_container, fragment);
+            fragmentTransaction.commit();
+
         } else {
             Log.d(TAG, "taskEditRequest: in single-pane mode (phone)");
             // in single-pane mode, start the detail activity for the selected item Id.
