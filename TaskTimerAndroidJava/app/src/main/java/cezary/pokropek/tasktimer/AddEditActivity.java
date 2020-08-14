@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 
-public class AddEditActivity extends AppCompatActivity {
+public class AddEditActivity extends AppCompatActivity implements AddEditActivityFragment.OnSaveClicked{
     public static final String TAG = "AddEditActivity";
 
     @Override
@@ -36,7 +36,10 @@ public class AddEditActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment, fragment);
         fragmentTransaction.commit();
-
     }
 
+    @Override
+    public void onSaveClicked() {
+        finish();
+    }
 }
