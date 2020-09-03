@@ -65,6 +65,24 @@ public class AppDialog extends DialogFragment {
         int positiveStringId;
         int negativeStringId;
 
+        if(arguments != null){
+            dialogId = arguments.getInt(DIALOG_ID);
+            messageString = arguments.getString(DIALOG_MESSAGE);
+            if(dialogId == 0 || messageString == null) {
+                throw new IllegalArgumentException("DIALOG_ID and/or DIALOG_MESSAGE not present in the bundle");
+            }
+            positiveStringId = arguments.getInt(DIALOG_POSITIVE_RID);
+            if(positiveStringId == 0) {
+                positiveStringId = R.string.ok;
+            }
+            negativeStringId = arguments.getInt(DIALOG_NEGATIVE_RID);
+            if(negativeStringId == 0) {
+                negativeStringId = R.string.cancel;
+            }
+        } else {
+            throw new IllegalArgumentException("Must pass DIALOG_ID and DIALOG_MESSAGE in the bundle");
+        }
+
         builder.setMessage(messageString)
                 .setPositiveButton(positiveStringId, new DialogInterface.OnClickListener() {
                     @Override
@@ -83,4 +101,17 @@ public class AppDialog extends DialogFragment {
 
         return super.onCreateDialog(savedInstanceState);
     }
+
+    @Override
+    public void onCancel(@NonNull DialogInterface dialog) {
+        super.onCancel(dialog);
+        Log.d(TAG, "onCancel: called");
+    }
+
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        Log.d(TAG, "onDismiss: called");
+    }
+
 }
