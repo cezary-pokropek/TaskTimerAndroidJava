@@ -104,8 +104,12 @@ public class AppDialog extends DialogFragment {
 
     @Override
     public void onCancel(@NonNull DialogInterface dialog) {
-        super.onCancel(dialog);
         Log.d(TAG, "onCancel: called");
+        if (mDialogEvents != null) {
+            int dialogId = getArguments().getInt(DIALOG_ID);
+            mDialogEvents.onDialogCancelled(dialogId);
+        }
+
     }
 
     @Override
@@ -115,3 +119,14 @@ public class AppDialog extends DialogFragment {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
