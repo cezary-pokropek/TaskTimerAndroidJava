@@ -22,7 +22,9 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity implements CursorRecyclerViewAdapter.OnTaskClickListener, AddEditActivityFragment.OnSaveClicked{
+public class MainActivity extends AppCompatActivity implements CursorRecyclerViewAdapter.OnTaskClickListener,
+                                                                AddEditActivityFragment.OnSaveClicked,
+                                                                AppDialog.DialogEvents{
 
     private static final String TAG = "MainActivity";
 
@@ -150,6 +152,20 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
     }
 
 
+    @Override
+    public void onPositiveDialogResult(int dialogId, Bundle args) {
+        Log.d(TAG, "onPositiveDialogResult: called");
+    }
+
+    @Override
+    public void onNegativeDialogResult(int dialogId, Bundle args) {
+        Log.d(TAG, "onNegativeDialogResult: called");
+    }
+
+    @Override
+    public void onDialogCancelled(int dialogId) {
+        Log.d(TAG, "onDialogCancelled: called");
+    }
 }
 
 
