@@ -114,10 +114,13 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
         args.putString(AppDialog.DIALOG_MESSAGE, getString(R.string.deldiag_message, task.getId(), task.getName()));
         args.putInt(AppDialog.DIALOG_POSITIVE_RID, R.string.deldiag_positive_caption);
 
+        args.putLong("TaskId", task.getId());
+
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), null);
 
-        getContentResolver().delete(TasksContract.buildTaskUri(task.getId()), null, null);
+//        getContentResolver().delete(TasksContract.buildTaskUri(task.getId()),null, null);
+
     }
 
     private void taskEditRequest(Task task) {
@@ -155,6 +158,9 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
     @Override
     public void onPositiveDialogResult(int dialogId, Bundle args) {
         Log.d(TAG, "onPositiveDialogResult: called");
+        Long taskId = args.getLong("TaskId");
+        if(BuildConfig.DEBUG && taskId == 0) throw new AssertionError("Task ID is zero");
+        getContentResolver().delete(TasksContract.buildTaskUri(taskId), null, null);
     }
 
     @Override
