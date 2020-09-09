@@ -116,11 +116,8 @@ public class AppDialog extends DialogFragment {
 
     }
 
-    @Override
-    public void onDismiss(@NonNull DialogInterface dialog) {
-//        super.onDismiss(dialog);
-        Log.d(TAG, "onDismiss: called");
-    }
+
+
 
 }
 

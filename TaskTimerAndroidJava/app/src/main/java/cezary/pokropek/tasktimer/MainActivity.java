@@ -1,24 +1,14 @@
 package cezary.pokropek.tasktimer;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -32,8 +22,8 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
     //i.e. running in landscape on a tablet
     private boolean mTwoPane = false;
 
-    private static final String ADD_EDIT_FRAGMENT = "AddEditFragment";
-    public static final int DELETE_DIALOG_ID = 1;
+    public static final int DIALOG_ID_DELETE = 1;
+    public static final int DIALOG_ID_CANCEL_EDIT = 2;
 
 
     @Override
@@ -110,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
 
         AppDialog dialog = new AppDialog();
         Bundle args = new Bundle();
-        args.putInt(AppDialog.DIALOG_ID, DELETE_DIALOG_ID);
+        args.putInt(AppDialog.DIALOG_ID, DIALOG_ID_DELETE);
         args.putString(AppDialog.DIALOG_MESSAGE, getString(R.string.deldiag_message, task.getId(), task.getName()));
         args.putInt(AppDialog.DIALOG_POSITIVE_RID, R.string.deldiag_positive_caption);
 
@@ -172,6 +162,31 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
     public void onDialogCancelled(int dialogId) {
         Log.d(TAG, "onDialogCancelled: called");
     }
+
+    @Override
+    public void onBackPressed() {
+        Log.d(TAG, "onBackPressed: called");
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        AddEditActivityFragment fragment = (AddEditActivityFragment) fragmentManager.findFragmentById(R.id.task_details_container);
+        if((fragment == null) || fragment.canClose()) {
+            super.onBackPressed();
+        } else {
+            // show dialogue to get confirmation to quit editing
+            AppDialog dialog = new AppDialog();
+            Bundle args = new Bundle();
+            args.putInt(AppDialog.DIALOG_ID, DIALOG_ID_CANCEL_EDIT);
+            args.putString(AppDialog.DIALOG_MESSAGE, getString(R.string.cancelEditDiag_message));
+            args.putInt(AppDialog.DIALOG_POSITIVE_RID, R.string.getStringcancelEditDialog_positive_caption);
+            args.putInt(AppDialog.DIALOG_NEGATIVE_RID, R.string.cancelEditDialog_negative_caption);
+
+            dialog.setArguments(args);
+            dialog.show(getSupportFragmentManager(), null);
+
+        }
+
+    }
+
+
 }
 
 
