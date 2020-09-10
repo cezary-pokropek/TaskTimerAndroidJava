@@ -148,19 +148,35 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
     @Override
     public void onPositiveDialogResult(int dialogId, Bundle args) {
         Log.d(TAG, "onPositiveDialogResult: called");
-        Long taskId = args.getLong("TaskId");
-        if(BuildConfig.DEBUG && taskId == 0) throw new AssertionError("Task ID is zero");
-        getContentResolver().delete(TasksContract.buildTaskUri(taskId), null, null);
+        switch(dialogId) {
+            case DIALOG_ID_DELETE:
+                Long taskId = args.getLong("TaskId");
+                if(BuildConfig.DEBUG && taskId == 0) throw new AssertionError("Task ID is zero");
+                getContentResolver().delete(TasksContract.buildTaskUri(taskId), null, null);
+                break;
+            case DIALOG_ID_CANCEL_EDIT:
+                // no action required
+                break;
+        }
     }
 
     @Override
     public void onNegativeDialogResult(int dialogId, Bundle args) {
         Log.d(TAG, "onNegativeDialogResult: called");
+        switch (dialogId) {
+            case DIALOG_ID_DELETE:
+                // no action required
+                break;
+            case DIALOG_ID_CANCEL_EDIT:
+                finish();
+                break;
+        }
     }
 
     @Override
     public void onDialogCancelled(int dialogId) {
         Log.d(TAG, "onDialogCancelled: called");
+        
     }
 
     @Override
