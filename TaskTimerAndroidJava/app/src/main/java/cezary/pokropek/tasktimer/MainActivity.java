@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
     @Override
     public void onDialogCancelled(int dialogId) {
         Log.d(TAG, "onDialogCancelled: called");
-        
+
     }
 
     @Override
