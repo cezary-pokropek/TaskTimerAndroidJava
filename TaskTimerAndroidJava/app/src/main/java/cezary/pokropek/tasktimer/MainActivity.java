@@ -1,8 +1,10 @@
 package cezary.pokropek.tasktimer;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -11,6 +13,8 @@ import androidx.fragment.app.FragmentManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements CursorRecyclerViewAdapter.OnTaskClickListener,
                                                                 AddEditActivityFragment.OnSaveClicked,
@@ -24,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
 
     public static final int DIALOG_ID_DELETE = 1;
     public static final int DIALOG_ID_CANCEL_EDIT = 2;
+    private AlertDialog mDialog = null;         // module scope because we need to dismiss it in on Stop
+                                                // e.g. when orientation changes to avoid memory leaks.
 
 
     @Override
@@ -81,12 +87,33 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
             case R.id.menumain_settings:
                 break;
             case R.id.menumain_showAbout:
+                showAboutDialog();
                 break;
             case R.id.menumain_generate:
                 break;
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void showAboutDialog() {
+        @SuppressLint("InflateParams") View messageView = getLayoutInflater().inflate(R.layout.about, null, false);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.app_name);
+        builder.setIcon(R.mipmap.ic_launcher);
+
+        builder.setView(messageView);
+
+        mDialog = builder.create();
+        mDialog.setCanceledOnTouchOutside(true);
+//        builder.setTitle(R.string.app_name);
+//        builder.setIcon(R.mipmap.ic_launcher);
+
+        TextView tv = (TextView) messageView.findViewById(R.id.about_version);
+        tv.setText("v" + BuildConfig.VERSION_NAME);
+
+        mDialog.show();
     }
 
     @Override
@@ -202,7 +229,13 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
 
     }
 
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
+    }
 }
 
 

@@ -34,4 +34,8 @@
     <string name="cancelEditDiag_message">You have unsaved changes. Do you want to abandon your changes, or continue editing?</string>
     <string name="getStringcancelEditDialog_positive_caption">Continue editing</string>
     <string name="cancelEditDialog_negative_caption">Abandon changes</string>
+    <string name="about_copyright">Copyright \u00a9 2020 Cezary Pokropek</string>
+    <string name="about_weblink">Instructons avaiable at www.cezarypokropek.com</string>
+    <string name="about_mail">Full support, email tasktimer@cezarypokropek.com</string>
+    <string name="about_credits">Icon derivered from <b> analog clock </b> at openclipart.org by <b> Anonymous </b></string>
 </resources>
