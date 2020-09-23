@@ -1,6 +1,7 @@
 package cezary.pokropek.tasktimer;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -104,6 +105,16 @@ public class MainActivity extends AppCompatActivity implements CursorRecyclerVie
         builder.setIcon(R.mipmap.ic_launcher);
 
         builder.setView(messageView);
+
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+//                Log.d(TAG, "onClick: Entering messageView.onClick, showing = " + mDialog.isShowing());
+                if (mDialog != null && mDialog.isShowing()) {
+                    mDialog.dismiss();
+                }
+            }
+        });
 
         mDialog = builder.create();
         mDialog.setCanceledOnTouchOutside(true);
