@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+
 public class AppDialog extends DialogFragment {
     public static final String TAG = "AppDialog";
 
